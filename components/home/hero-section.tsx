@@ -30,33 +30,33 @@ const codeLines = [
   </>,
   <>
     {'  name: '}
-    <span className="text-cyan-400">"Mohammed Elalimy"</span>,
+    <span className="text-cyan-400">&quot;Mohammed Elalimy&quot;</span>,
   </>,
   <>
     {'  role: '}
-    <span className="text-cyan-400">"Full-Stack Developer"</span>,
+    <span className="text-cyan-400">&quot;Full-Stack Developer&quot;</span>,
   </>,
   <>{'  stack: ['}</>,
   <>
     {'    '}
-    <span className="text-cyan-400">"MERN"</span>,
+    <span className="text-cyan-400">&quot;MERN&quot;</span>,
   </>,
   <>
     {'    '}
-    <span className="text-cyan-400">"Next.js"</span>,
+    <span className="text-cyan-400">&quot;Next.js&quot;</span>,
   </>,
   <>
     {'    '}
-    <span className="text-cyan-400">"Shopify"</span>,
+    <span className="text-cyan-400">&quot;Shopify&quot;</span>,
   </>,
   <>{'  ],'}</>,
   <>
     {'  passion: '}
-    <span className="text-cyan-400">"Building digital experiences"</span>,
+    <span className="text-cyan-400">&quot;Building digital experiences&quot;</span>,
   </>,
   <>
     {'  location: '}
-    <span className="text-cyan-400">"Egypt"</span>,
+    <span className="text-cyan-400">&quot;Egypt&quot;</span>,
   </>,
   <>{'};'}</>,
   <></>,

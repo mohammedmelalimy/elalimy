@@ -38,7 +38,7 @@ export default function SiteHeader() {
 
           <div className="hidden items-center gap-3 md:flex">
             <Link
-              href="/resume.pdf"
+              href="/Full Stack.pdf"
               className="inline-flex items-center gap-2 rounded-xl border border-[#06B6D4]/50 bg-[#06B6D4]/5 px-4 py-2.5 text-sm font-medium text-[#06B6D4] transition-all duration-300 hover:bg-[#06B6D4]/10 hover:text-white"
             >
               Resume
