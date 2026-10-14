@@ -1,0 +1,32 @@
+
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 64 64"
+  fill="none"
+>
+  <!-- Code bracket > -->
+  <path
+    d="M6 18 L18 32 L6 46"
+    stroke="#06B6D4"
+    stroke-width="6"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+
+  <!-- Letter E -->
+  <path
+    d="M25 18 V46 M25 18 H42 M25 32 H39 M25 46 H42"
+    stroke="#06B6D4"
+    stroke-width="6"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+
+  <!-- Underscore _ -->
+  <path
+    d="M50 49 H60"
+    stroke="#06B6D4"
+    stroke-width="4"
+    stroke-linecap="round"
+  />
+</svg>
