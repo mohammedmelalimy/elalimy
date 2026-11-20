@@ -1,7 +1,9 @@
 import Link from 'next/link';
-import { ArrowDown, ArrowRight, Mail, Terminal } from 'lucide-react';
+import { ArrowDown, ArrowRight, Mail } from 'lucide-react';
 import { FaGithub, FaLinkedinIn } from 'react-icons/fa';
+
 import TypingText from '../typing-text';
+import LiveCodeEditor from './live-code-editor';
 
 // Social links
 const socialLinks = [
@@ -22,98 +24,6 @@ const socialLinks = [
   }
 ];
 
-// Code editor content
-const codeLines = [
-  <>
-    <span className="text-purple-400">const</span>
-    {' developer = {'}
-  </>,
-  <>
-    {'  name: '}
-    <span className="text-cyan-400">&quot;Mohammed Elalimy&quot;</span>,
-  </>,
-  <>
-    {'  role: '}
-    <span className="text-cyan-400">&quot;Full-Stack Developer&quot;</span>,
-  </>,
-  <>{'  stack: ['}</>,
-  <>
-    {'    '}
-    <span className="text-cyan-400">&quot;MERN&quot;</span>,
-  </>,
-  <>
-    {'    '}
-    <span className="text-cyan-400">&quot;Next.js&quot;</span>,
-  </>,
-  <>
-    {'    '}
-    <span className="text-cyan-400">&quot;Shopify&quot;</span>,
-  </>,
-  <>{'  ],'}</>,
-  <>
-    {'  passion: '}
-    <span className="text-cyan-400">&quot;Building digital experiences&quot;</span>,
-  </>,
-  <>
-    {'  location: '}
-    <span className="text-cyan-400">&quot;Egypt&quot;</span>,
-  </>,
-  <>{'};'}</>,
-  <></>,
-  <>
-    <span className="text-yellow-300">console</span>.<span className="text-blue-400">log</span>
-    (developer);
-  </>
-];
-
-// Developer code editor
-function CodeEditor() {
-  return (
-    <div className="w-full max-w-[480px] overflow-hidden rounded-2xl border border-cyan-500/25 bg-[#0B1119]/95 shadow-[0_20px_70px_rgba(0,0,0,0.3)]">
-      {/* Window header */}
-      <div className="flex h-11 items-center gap-3 border-b border-white/[0.07] bg-white/[0.02] px-4">
-        <div className="flex gap-1.5">
-          <span className="h-2.5 w-2.5 rounded-full bg-[#FF5F57]" />
-          <span className="h-2.5 w-2.5 rounded-full bg-[#FEBC2E]" />
-          <span className="h-2.5 w-2.5 rounded-full bg-[#28C840]" />
-        </div>
-
-        <div className="ml-2 flex items-center gap-2 border-l border-white/10 pl-3">
-          <Terminal size={14} className="text-[#06B6D4]" />
-
-          <span className="font-mono text-xs text-slate-400">developer.ts</span>
-        </div>
-      </div>
-
-      {/* Code lines */}
-      <div className="overflow-x-auto py-4">
-        <div className="min-w-max space-y-0.5 px-4 font-mono text-[11px] leading-[1.6rem] sm:text-xs">
-          {codeLines.map((line, index) => (
-            <div key={index} className="flex">
-              <span className="mr-5 w-5 shrink-0 select-none text-right text-slate-600">
-                {index + 1}
-              </span>
-
-              <code className="whitespace-pre text-slate-200">{line}</code>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Editor footer */}
-      <div className="flex items-center justify-between border-t border-white/[0.07] px-4 py-2 font-mono text-[10px] text-slate-500">
-        <span>TypeScript</span>
-
-        <span className="flex items-center gap-2">
-          <span className="h-1.5 w-1.5 rounded-full bg-[#06B6D4]" />
-          Ready to build
-        </span>
-      </div>
-    </div>
-  );
-}
-
-// Hero section
 export default function HeroSection() {
   return (
     <section className="relative isolate flex min-h-[calc(100svh-7rem)] items-center overflow-hidden bg-[#050B12] text-white">
@@ -162,12 +72,12 @@ export default function HeroSection() {
               <span className="block">into real</span>
 
               <span className="relative block min-h-[1.13em] text-[#06B6D4]">
-                {/* Reserve space for the longest phrase */}
+                {/* Reserve space for longest phrase */}
                 <span aria-hidden="true" className="invisible block">
                   e-commerce stores.|
                 </span>
 
-                {/* Typing animation */}
+                {/* Animated heading text */}
                 <span className="absolute inset-0">
                   <TypingText />
                 </span>
@@ -229,9 +139,9 @@ export default function HeroSection() {
             </div>
           </div>
 
-          {/* Right: Code editor */}
+          {/* Right: Live code editor */}
           <div className="order-2 flex justify-center lg:justify-end">
-            <CodeEditor />
+            <LiveCodeEditor />
           </div>
         </div>
 
