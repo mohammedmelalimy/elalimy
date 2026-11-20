@@ -45,3 +45,24 @@ body {
     animation: none;
   }
 }
+@keyframes scrollMouseDot {
+  0% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(0);
+  }
+  20% {
+    opacity: 1;
+  }
+  70% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(10px);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(14px);
+  }
+}
+
+.scroll-mouse-dot {
+  animation: scrollMouseDot 1.6s ease-in-out infinite;
+}
