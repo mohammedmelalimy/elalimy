@@ -3,7 +3,7 @@
 import { useEffect, useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowRight, ArrowUpRight, ExternalLink } from 'lucide-react';
+import { ArrowUpRight, ExternalLink } from 'lucide-react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -14,11 +14,9 @@ type Project = {
   category: string;
   description: string;
   stack: string[];
-  art: 'sapihive' | 'dermalyze' | 'aplus';
-  /** Add a screenshot to public/projects and set this path, e.g. '/projects/sapihive.webp'. */
-  screenshot?: string;
-  /** Only set a live URL after confirming the project is published. */
-  liveUrl?: string;
+  screenshot: string;
+  screenshotMobile: string;
+  liveUrl: string;
 };
 
 const featuredProject: Project = {
@@ -27,10 +25,10 @@ const featuredProject: Project = {
   title: 'SapiHive',
   category: 'Corporate Website / Workforce',
   description:
-    'A bilingual digital experience that brings five specialist workforce services together under one distinctive identity.',
+    'A bilingual digital experience bringing five specialist workforce services together under one distinctive identity.',
   stack: ['Next.js', 'TypeScript', 'Tailwind CSS', 'GSAP'],
-  art: 'sapihive',
-  // screenshot: '/projects/sapihive.webp',
+  screenshot: '/projects/sapihive-desktop.webp',
+  screenshotMobile: '/projects/sapihive-mobile.webp',
   liveUrl: 'https://www.sapihive.com/en'
 };
 
@@ -43,202 +41,88 @@ const otherProjects: Project[] = [
     description:
       'A modern experience connecting dermatological technology, device discovery, and business partnerships.',
     stack: ['Next.js', 'TypeScript', 'Tailwind CSS'],
-    art: 'dermalyze',
+    screenshot: '/projects/dermalyze-desktop.webp',
+    screenshotMobile: '/projects/dermalyze-mobile.webp',
     liveUrl: 'https://dermlyze.com/'
-    // screenshot: '/projects/dermalyze.webp',
   },
   {
-    id: 'aplus',
+    id: 'decoviamaison',
     index: '03',
-    title: 'A Plus',
-    category: 'E-commerce / Shopify',
+    title: 'Decovia Maison',
+    category: 'Luxury Interiors / Shopify',
     description:
-      'A custom storefront featuring engaging product showcases, smooth interactions, and a strong visual identity.',
-    stack: ['Shopify', 'Liquid', 'JavaScript', 'GSAP'],
-    art: 'aplus',
-    // screenshot: '/projects/aplus.webp',
-    liveUrl: 'https://aplus-egy.com/'
+      'An elegant e-commerce experience showcasing curated furniture, Murano lighting, and decorative art.',
+    stack: ['Shopify', 'Liquid', 'JavaScript'],
+    screenshot: '/projects/decoviamaison-desktop.webp',
+    screenshotMobile: '/projects/decoviamaison-mobile.webp',
+    liveUrl: 'https://decoviamaison.com/'
   }
 ];
 
-const honeycombCells = [
-  { x: 95, y: 40 },
-  { x: 198, y: 40 },
-  { x: 147, y: 130 },
-  { x: 250, y: 130 },
-  { x: 95, y: 220 },
-  { x: 198, y: 220 },
-  { x: 301, y: 220 }
-];
-
-/**
- * These are code-built editorial covers, NOT screenshots of the live websites.
- * When real screenshots are ready, uncomment each `screenshot` above.
- */
-function ProjectArtwork({ project }: { project: Project }) {
+function ProjectCover({ project, featured = false }: { project: Project; featured?: boolean }) {
   return (
-    <div className="relative h-full min-h-[270px] w-full overflow-hidden sm:min-h-[320px]">
-      {project.art === 'sapihive' && (
-        <div className="relative h-full min-h-[270px] overflow-hidden bg-[#241B3B] text-[#F5F0E7] sm:min-h-[320px]">
-          <div
-            aria-hidden="true"
-            className="absolute inset-0 opacity-25"
-            style={{
-              backgroundImage: 'radial-gradient(rgba(255,255,255,.26) 1px, transparent 1px)',
-              backgroundSize: '19px 19px'
-            }}
-          />
-          <div
-            aria-hidden="true"
-            className="absolute -right-16 top-0 h-72 w-72 rounded-full bg-[#A48AC9]/20 blur-[90px]"
-          />
-          <svg
-            aria-hidden="true"
-            viewBox="0 0 460 400"
-            className="absolute -right-14 top-1/2 h-[350px] w-[400px] -translate-y-1/2 opacity-80 sm:right-0 sm:h-[400px] sm:w-[460px]"
-          >
-            {honeycombCells.map(({ x, y }, i) => (
-              <polygon
-                key={`${x}-${y}`}
-                points={`${x + 46},${y} ${x + 92},${y + 27} ${x + 92},${y + 81} ${x + 46},${y + 108} ${x},${y + 81} ${x},${y + 27}`}
-                stroke={i === 3 ? '#F3CB55' : '#A993C9'}
-                strokeWidth={i === 3 ? 3 : 1.5}
-                fill={i === 3 ? '#F3CB55' : 'none'}
-                fillOpacity={i === 3 ? 0.92 : 0}
-              />
-            ))}
-          </svg>
-          <div className="relative z-10 flex h-full min-h-[270px] flex-col justify-between p-6 sm:min-h-[320px] sm:p-9 lg:p-11">
-            <div className="flex items-center gap-2 text-xl font-extrabold tracking-[-0.06em] sm:text-2xl">
-              <span className="text-[#F3CB55]">⬡</span> SapiHive
-            </div>
-            <div className="max-w-[310px]">
-              <p className="mb-3 font-mono text-[10px] font-semibold uppercase tracking-[0.25em] text-[#E6D8FA]/75">
-                Workforce-as-a-Service
-              </p>
-              <p className="text-[clamp(1.8rem,3.4vw,3.25rem)] font-semibold leading-[1.03] tracking-[-0.055em]">
-                People.
-                <br />
-                Potential.
-                <br />
-                <span className="text-[#F3CB55]">Progress.</span>
-              </p>
-            </div>
-            <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-[#E6D8FA]/65">
-              Human intelligence. Organized like a hive.
-            </p>
-          </div>
-        </div>
-      )}
-
-      {project.art === 'dermalyze' && (
-        <div className="relative h-full min-h-[270px] overflow-hidden bg-[#E9EEE8] text-[#183E37] sm:min-h-[320px]">
-          <div
-            aria-hidden="true"
-            className="absolute -right-20 bottom-0 h-72 w-72 rounded-full bg-[#9FBDB0]/40 blur-[70px]"
-          />
-          <div
-            aria-hidden="true"
-            className="absolute -right-8 top-1/2 h-60 w-60 -translate-y-1/2 rounded-full border border-[#A9C2B4]/70 sm:right-8 sm:h-72 sm:w-72"
-          />
-          <div
-            aria-hidden="true"
-            className="absolute right-2 top-1/2 h-44 w-44 -translate-y-1/2 rounded-full border border-[#A9C2B4]/80 sm:right-14 sm:h-60 sm:w-60"
-          />
-          <div
-            aria-hidden="true"
-            className="absolute right-14 top-1/2 h-24 w-24 -translate-y-1/2 rounded-full bg-gradient-to-br from-white/90 via-[#BED4C6] to-[#5E9184] shadow-[0_18px_55px_rgba(44,86,73,0.17)] sm:right-28 sm:h-32 sm:w-32"
-          />
-          <div className="relative z-10 flex h-full min-h-[270px] flex-col justify-between p-6 sm:min-h-[320px] sm:p-9">
-            <span className="text-xl font-semibold tracking-[-0.06em] sm:text-2xl">
-              dermalyze<span className="text-[#568E7C]">.</span>
-            </span>
-            <div className="max-w-[250px]">
-              <p className="mb-3 font-mono text-[10px] uppercase tracking-[0.22em] text-[#4A7569]">
-                Dermatological technology
-              </p>
-              <p className="text-[clamp(1.7rem,3vw,2.6rem)] font-semibold leading-[1.08] tracking-[-0.055em]">
-                See beyond
-                <br />
-                the surface.
-              </p>
-            </div>
-            <span className="font-mono text-[10px] uppercase tracking-[0.13em] text-[#64867B]">
-              Technology / Partnership / Growth
-            </span>
-          </div>
-        </div>
-      )}
-
-      {project.art === 'aplus' && (
-        <div className="relative h-full min-h-[270px] overflow-hidden bg-[#23253C] text-white sm:min-h-[320px]">
-          <div
-            aria-hidden="true"
-            className="absolute -right-12 -top-20 h-72 w-72 rounded-full bg-[#F05A28] blur-[0px] sm:-right-5 sm:h-80 sm:w-80"
-          />
-          <div
-            aria-hidden="true"
-            className="absolute right-12 top-8 h-64 w-64 rounded-full border border-white/20 sm:right-20 sm:h-72 sm:w-72"
-          />
-          <div
-            aria-hidden="true"
-            className="absolute bottom-[-70px] right-[-48px] h-56 w-56 rounded-full bg-[#E8BA39] sm:h-64 sm:w-64"
-          />
-          <div
-            aria-hidden="true"
-            className="absolute inset-0 opacity-15"
-            style={{
-              backgroundImage:
-                'linear-gradient(120deg, rgba(255,255,255,0.3) 1px, transparent 1px)',
-              backgroundSize: '42px 42px'
-            }}
-          />
-          <div className="relative z-10 flex h-full min-h-[270px] flex-col justify-between p-6 sm:min-h-[320px] sm:p-9">
-            <span className="text-2xl font-extrabold tracking-[-0.06em] sm:text-3xl">
-              A<span className="text-[#F7A77F]">+</span>
-            </span>
-            <div>
-              <p className="mb-3 font-mono text-[10px] uppercase tracking-[0.23em] text-white/65">
-                Built for the everyday spark
-              </p>
-              <p className="max-w-[300px] text-[clamp(2rem,3.6vw,3.3rem)] font-extrabold leading-[1.04] tracking-[-0.055em]">
-                LIGHT UP
-                <br />
-                THE DAY.
-              </p>
-            </div>
-            <span className="font-mono text-[10px] uppercase tracking-[0.15em] text-white/70">
-              A Plus / Digital Storefront
-            </span>
-          </div>
-        </div>
-      )}
-
-      {project.screenshot && (
-        <Image
-          src={project.screenshot}
-          alt={`${project.title} website screenshot`}
-          fill
-          sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 58vw"
-          className="relative z-20 object-cover object-top transition-transform duration-700 ease-out motion-safe:group-hover:scale-[1.035]"
-        />
-      )}
+    <div
+      className={
+        'relative w-full overflow-hidden bg-[#101c2a] ' +
+        (featured
+          ? 'h-[230px] sm:h-[280px] md:h-full md:min-h-[300px]'
+          : 'aspect-[4/3] sm:aspect-auto sm:h-[215px] lg:h-[230px]')
+      }
+    >
+      {/* The mobile cover is designed at 1080 × 810, desktop at 1600 × 1000. */}
+      <Image
+        src={project.screenshotMobile}
+        alt={`${project.title} website preview`}
+        fill
+        sizes="(max-width: 639px) calc(100vw - 40px), 1px"
+        className="object-cover object-top transition-transform duration-700 motion-safe:group-hover:scale-[1.035] sm:hidden"
+      />
+      <Image
+        src={project.screenshot}
+        alt=""
+        aria-hidden="true"
+        fill
+        sizes={
+          featured
+            ? '(min-width: 1024px) 560px, (min-width: 768px) 52vw, (min-width: 640px) 100vw, 1px'
+            : '(min-width: 1024px) 520px, (min-width: 640px) 48vw, 1px'
+        }
+        className="hidden object-cover object-top transition-transform duration-700 motion-safe:group-hover:scale-[1.035] sm:block"
+      />
     </div>
   );
 }
 
 function TechTags({ tags }: { tags: string[] }) {
   return (
-    <div className="flex flex-wrap gap-2">
+    <div className="flex flex-wrap gap-1.5">
       {tags.map((tag) => (
         <span
           key={tag}
-          className="rounded-full border border-white/[0.09] bg-white/[0.035] light:border-[#D4E0E8] light:bg-[#F0F5F8] px-3 py-1.5 font-mono text-[10px] tracking-wide text-slate-400 light:text-[#526679] sm:text-[11px]"
+          className="rounded-full border border-white/[0.09] bg-white/[0.035] px-2.5 py-1 font-mono text-[10px] tracking-wide text-slate-400 light:border-[#D4E0E8] light:bg-[#F0F5F8] light:text-[#526679]"
         >
           {tag}
         </span>
       ))}
     </div>
+  );
+}
+
+function LiveLink({ project, compact = false }: { project: Project; compact?: boolean }) {
+  return (
+    <a
+      href={project.liveUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label={`Visit ${project.title} live website`}
+      className={
+        'inline-flex shrink-0 items-center justify-center border border-white/15 text-slate-300 transition-all duration-300 hover:border-[#06B6D4] hover:text-[#06B6D4] light:border-[#C9DAE4] light:text-[#526679] ' +
+        (compact ? 'h-8 w-8 rounded-full' : 'gap-2 rounded-lg px-3 py-2 text-xs font-medium')
+      }
+    >
+      {!compact && 'Visit live site'}
+      <ExternalLink size={compact ? 15 : 14} />
+    </a>
   );
 }
 
@@ -257,52 +141,37 @@ export default function SelectedWork() {
         { yPercent: 105 },
         {
           yPercent: 0,
-          duration: 1,
+          duration: 0.9,
           ease: 'power3.out',
-          scrollTrigger: { trigger: section, start: 'top 78%', once: true }
+          scrollTrigger: { trigger: section, start: 'top 80%', once: true }
         }
       );
 
       gsap.fromTo(
         '[data-work-heading-detail]',
-        { y: 22, autoAlpha: 0 },
+        { y: 18, autoAlpha: 0 },
         {
           y: 0,
           autoAlpha: 1,
-          duration: 0.8,
+          duration: 0.75,
           stagger: 0.12,
           ease: 'power2.out',
-          scrollTrigger: { trigger: section, start: 'top 78%', once: true }
+          scrollTrigger: { trigger: section, start: 'top 80%', once: true }
         }
       );
 
-      const cards = gsap.utils.toArray<HTMLElement>('[data-work-card]');
-      cards.forEach((card) => {
+      gsap.utils.toArray<HTMLElement>('[data-work-card]').forEach((card) => {
         gsap.fromTo(
           card,
-          { y: 54, autoAlpha: 0 },
+          { y: 36, autoAlpha: 0 },
           {
             y: 0,
             autoAlpha: 1,
-            duration: 0.95,
+            duration: 0.85,
             ease: 'power3.out',
-            scrollTrigger: { trigger: card, start: 'top 87%', once: true }
+            scrollTrigger: { trigger: card, start: 'top 88%', once: true }
           }
         );
-
-        const artwork = card.querySelector('[data-work-art]');
-        if (artwork) {
-          gsap.fromTo(
-            artwork,
-            { scale: 1.07 },
-            {
-              scale: 1,
-              duration: 1.3,
-              ease: 'power2.out',
-              scrollTrigger: { trigger: card, start: 'top 87%', once: true }
-            }
-          );
-        }
       });
     }, section);
 
@@ -314,7 +183,7 @@ export default function SelectedWork() {
       id="selected-work"
       ref={sectionRef}
       aria-labelledby="selected-work-title"
-      className="relative isolate overflow-hidden bg-[#050B12] py-24 text-white sm:py-28 lg:py-32 light:bg-[#F7FAFC] light:text-[#122638]"
+      className="relative isolate overflow-hidden bg-[#050B12] py-16 text-white light:bg-[#F7FAFC] light:text-[#122638] sm:py-20 lg:py-24"
     >
       <div
         aria-hidden="true"
@@ -322,165 +191,113 @@ export default function SelectedWork() {
       />
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute -left-44 top-48 -z-10 h-[420px] w-[420px] rounded-full bg-[#06B6D4]/[0.025] blur-[110px]"
+        className="pointer-events-none absolute -left-44 top-48 -z-10 h-[360px] w-[360px] rounded-full bg-[#06B6D4]/[0.025] blur-[100px]"
       />
 
       <div className="mx-auto w-full max-w-7xl px-5 sm:px-8 lg:px-10">
-        {/* Editorial heading */}
-        <div className="mb-11 flex flex-col justify-between gap-7 sm:mb-14 lg:flex-row lg:items-end">
+        <div className="mb-8 flex flex-col justify-between gap-5 sm:mb-10 md:flex-row md:items-end">
           <div>
             <p
               data-work-heading-detail
-              className="mb-5 flex items-center gap-3 font-mono text-xs font-medium uppercase tracking-[0.2em] text-[#06B6D4]"
+              className="mb-3 flex items-center gap-3 font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-[#06B6D4]"
             >
-              <span className="h-px w-8 bg-[#06B6D4]" />
+              <span className="h-px w-7 bg-[#06B6D4]" />
               Selected Work
             </p>
-
             <div className="overflow-hidden pb-1">
               <h2
                 id="selected-work-title"
                 data-work-heading
-                className="text-[clamp(2.5rem,5vw,4.75rem)] font-bold leading-[1.06] tracking-[-0.055em]"
+                className="text-[clamp(2rem,4vw,3.25rem)] font-bold leading-[1.09] tracking-[-0.05em]"
               >
                 Ideas turned into <span className="text-[#06B6D4]">reality.</span>
               </h2>
             </div>
-
             <p
               data-work-heading-detail
-              className="mt-5 max-w-xl text-sm leading-7 text-slate-400 light:text-[#526679] sm:text-base"
+              className="mt-3 max-w-xl text-sm leading-6 text-slate-400 light:text-[#526679]"
             >
-              A selection of real-world projects — built with purpose, performance, and attention to
-              detail.
+              A selection of real projects — designed and developed with purpose.
             </p>
           </div>
-
           <Link
             data-work-heading-detail
             href="/projects"
-            className="group inline-flex w-fit shrink-0 items-center gap-2.5 border-b border-white/20 light:border-[#BCD1DE] pb-2 text-sm font-medium text-white light:text-[#122638] transition-colors hover:border-[#06B6D4] hover:text-[#06B6D4]"
+            className="inline-flex w-fit shrink-0 items-center gap-2 border-b border-white/20 pb-1.5 text-xs font-medium text-slate-300 transition-colors hover:border-[#06B6D4] hover:text-[#06B6D4] light:border-[#BCD1DE] light:text-[#385268]"
           >
-            View all projects
-            <ArrowUpRight
-              size={17}
-              className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-            />
+            View All Projects <ArrowUpRight size={15} />
           </Link>
         </div>
 
-        {/* Featured project — deliberately bigger than the other cards. */}
-        <article
-          data-work-card
-          className="group grid overflow-hidden rounded-[24px] border border-white/[0.09] bg-[#0B121C] light:border-[#DBE5EC] light:bg-white transition-colors duration-300 hover:border-[#06B6D4]/25 lg:grid-cols-[0.85fr_1.15fr] lg:rounded-[28px]"
-        >
-          <div className="flex flex-col justify-between p-6 sm:p-9 lg:p-11">
-            <div className="flex items-center justify-between gap-4">
-              <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-[#06B6D4]">
-                Featured Project / 01
-              </span>
-              <ArrowUpRight aria-hidden="true" size={22} className="text-slate-600 light:text-[#8295A4]" />
-            </div>
-
-            <div className="py-12 lg:py-9">
-              <p className="mb-4 font-mono text-xs uppercase tracking-widest text-slate-500 light:text-[#657B8B]">
-                {featuredProject.category}
-              </p>
-              <h3 className="text-[clamp(2.4rem,4vw,4.2rem)] font-bold leading-none tracking-[-0.06em]">
-                {featuredProject.title}
-              </h3>
-              <p className="mt-5 max-w-md text-sm leading-7 text-slate-400 light:text-[#526679] sm:text-base">
-                {featuredProject.description}
-              </p>
-            </div>
-
-            <TechTags tags={featuredProject.stack} />
-          </div>
-
-          <div className="relative min-h-[300px] overflow-hidden border-t border-white/[0.07] light:border-[#E2EBF0] lg:min-h-[440px] lg:border-l lg:border-t-0">
-            <div
-              data-work-art
-              className="absolute inset-0 h-full w-full origin-center will-change-transform"
-            >
-              <ProjectArtwork project={featuredProject} />
-            </div>
-          </div>
-        </article>
-
-        {/* Two supporting projects. */}
-        <div className="mt-5 grid gap-5 md:grid-cols-2 sm:mt-6 sm:gap-6">
-          {otherProjects.map((project) => (
-            <article
-              key={project.id}
-              data-work-card
-              className="group overflow-hidden rounded-[24px] border border-white/[0.09] bg-[#0B121C] light:border-[#DBE5EC] light:bg-white transition-colors duration-300 hover:border-[#06B6D4]/25 lg:rounded-[28px]"
-            >
-              <div className="relative h-[270px] overflow-hidden sm:h-[320px]">
-                <div
-                  data-work-art
-                  className="absolute inset-0 h-full w-full origin-center will-change-transform"
-                >
-                  <ProjectArtwork project={project} />
-                </div>
+        {/* Original asymmetric composition: one wide featured card, two smaller cards. */}
+        <div className="grid gap-4 sm:gap-5">
+          <article
+            data-work-card
+            className="group grid min-w-0 overflow-hidden rounded-2xl border border-white/[0.09] bg-[#0B121C] transition-colors duration-300 hover:border-[#06B6D4]/35 light:border-[#DBE5EC] light:bg-white md:grid-cols-[0.9fr_1.1fr]"
+          >
+            {/* On mobile: artwork first; desktop: content left, artwork right. */}
+            <div className="order-2 flex min-w-0 flex-col justify-between gap-5 p-5 sm:p-6 md:order-1 lg:p-7">
+              <div className="flex items-center justify-between gap-3">
+                <span className="font-mono text-[10px] uppercase tracking-[0.15em] text-[#06B6D4]">
+                  Featured Project / {featuredProject.index}
+                </span>
+                <span className="text-slate-500 light:text-[#657B8B]" aria-hidden="true">
+                  <ArrowUpRight size={18} />
+                </span>
               </div>
-
-              <div className="p-6 sm:p-8">
-                <div className="mb-5 flex items-center justify-between gap-4">
-                  <span className="font-mono text-[11px] uppercase tracking-[0.16em] text-[#06B6D4]">
-                    {project.index} / {project.category}
-                  </span>
-                  {project.liveUrl ? (
-                    <a
-                      href={project.liveUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label={`Visit ${project.title} live website`}
-                      className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-white/15 light:border-[#C9DAE4] text-slate-300 transition-colors hover:border-[#06B6D4] hover:text-[#06B6D4]"
-                    >
-                      <ExternalLink size={16} />
-                    </a>
-                  ) : (
-                    <ArrowUpRight
-                      aria-hidden="true"
-                      size={19}
-                      className="shrink-0 text-slate-600 light:text-[#8295A4]"
-                    />
-                  )}
-                </div>
-
-                <h3 className="text-3xl font-semibold tracking-[-0.05em] sm:text-[2rem]">
-                  {project.title}
-                </h3>
-                <p className="mt-3 min-h-[72px] text-sm leading-6 text-slate-400 light:text-[#526679] sm:leading-7">
-                  {project.description}
+              <div>
+                <p className="mb-2 font-mono text-[10px] uppercase tracking-wide text-slate-500 light:text-[#657B8B]">
+                  {featuredProject.category}
                 </p>
-
-                <div className="mt-6 flex flex-wrap items-center justify-between gap-5 border-t border-white/[0.07] light:border-[#E2EBF0] pt-5">
-                  <TechTags tags={project.stack} />
-                  {project.liveUrl && (
-                    <a
-                      href={project.liveUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 text-xs font-medium text-[#06B6D4] transition-colors hover:text-[#67E8F9]"
-                    >
-                      Live site <ArrowRight size={14} />
-                    </a>
-                  )}
-                </div>
+                <h3 className="text-[clamp(1.9rem,3vw,2.6rem)] font-bold leading-none tracking-[-0.05em]">
+                  {featuredProject.title}
+                </h3>
+                <p className="mt-3 max-w-[420px] text-[13px] leading-6 text-slate-400 light:text-[#526679] sm:text-sm">
+                  {featuredProject.description}
+                </p>
               </div>
-            </article>
-          ))}
-        </div>
+              <div className="flex flex-wrap items-center justify-between gap-4">
+                <TechTags tags={featuredProject.stack} />
+                <LiveLink project={featuredProject} />
+              </div>
+            </div>
+            <div className="order-1 min-w-0 overflow-hidden border-b border-white/[0.07] light:border-[#E2EBF0] md:order-2 md:border-b-0 md:border-l">
+              <ProjectCover project={featuredProject} featured />
+            </div>
+          </article>
 
-        {/* Section-to-page transition */}
-        <div className="mt-10 flex justify-center sm:mt-12 lg:hidden">
-          <Link
-            href="/projects"
-            className="inline-flex items-center gap-2 rounded-lg border border-white/15 light:border-[#C9DAE4] px-6 py-3 text-sm font-semibold text-white light:text-[#122638] transition-colors hover:border-[#06B6D4]/50 hover:text-[#06B6D4]"
-          >
-            Explore all projects <ArrowRight size={17} />
-          </Link>
+          <div className="grid gap-4 sm:gap-5 md:grid-cols-2">
+            {otherProjects.map((project) => (
+              <article
+                key={project.id}
+                data-work-card
+                className="group flex min-w-0 flex-col overflow-hidden rounded-2xl border border-white/[0.09] bg-[#0B121C] transition-colors duration-300 hover:border-[#06B6D4]/35 light:border-[#DBE5EC] light:bg-white"
+              >
+                <div className="overflow-hidden border-b border-white/[0.07] light:border-[#E2EBF0]">
+                  <ProjectCover project={project} />
+                </div>
+                <div className="flex flex-1 flex-col gap-3 p-5 sm:p-6">
+                  <div className="flex items-center justify-between gap-3">
+                    <span className="min-w-0 truncate font-mono text-[10px] uppercase tracking-[0.12em] text-[#06B6D4]">
+                      {project.index} / {project.category}
+                    </span>
+                    <LiveLink project={project} compact />
+                  </div>
+                  <div>
+                    <h3 className="text-[1.55rem] font-semibold leading-tight tracking-[-0.045em]">
+                      {project.title}
+                    </h3>
+                    <p className="mt-2 line-clamp-2 text-[13px] leading-[1.55] text-slate-400 light:text-[#526679]">
+                      {project.description}
+                    </p>
+                  </div>
+                  <div className="mt-auto border-t border-white/[0.07] pt-3 light:border-[#E2EBF0]">
+                    <TechTags tags={project.stack} />
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
         </div>
       </div>
     </section>

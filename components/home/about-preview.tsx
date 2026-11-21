@@ -65,7 +65,7 @@ export default function AboutPreview() {
       id="about-preview"
       ref={sectionRef}
       aria-labelledby="about-preview-title"
-      className="relative isolate overflow-hidden bg-[#050B12] py-20 text-white light:bg-[#F7FAFC] light:text-[#122638] sm:py-24 lg:py-28"
+      className="relative isolate overflow-hidden bg-[#050B12] py-12 text-white light:bg-[#F7FAFC] light:text-[#122638] sm:py-14 lg:py-16"
     >
       <div
         aria-hidden="true"
@@ -73,7 +73,7 @@ export default function AboutPreview() {
       />
 
       <div className="mx-auto w-full max-w-7xl px-5 sm:px-8 lg:px-10">
-        <div className="grid items-center gap-9 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16 xl:gap-24">
+        <div className="grid items-center gap-8 lg:grid-cols-[0.85fr_1.15fr] lg:gap-12 xl:gap-16">
           <div data-about-heading>
             <p className="mb-5 flex items-center gap-3 font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-[#06B6D4]">
               <span className="h-px w-8 bg-[#06B6D4]" />

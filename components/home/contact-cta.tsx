@@ -80,17 +80,17 @@ export default function ContactCTA() {
       id="contact-cta"
       ref={sectionRef}
       aria-labelledby="contact-cta-heading"
-      className="relative overflow-hidden bg-[#050B12] py-20 text-white light:bg-[#F7FAFC] light:text-[#122638] sm:py-24 lg:py-28"
+      className="relative overflow-hidden bg-[#050B12] py-12 text-white light:bg-[#F7FAFC] light:text-[#122638] sm:py-14 lg:py-16"
     >
-      <div className="mx-auto w-full max-w-7xl px-5 sm:px-8 lg:px-10">
-        {/* Light visual separator; no card, border box, or extra footer strip. */}
-        <div
-          data-hello-rule
-          aria-hidden="true"
-          className="mb-12 h-px w-full bg-white/[0.10] light:bg-[#DCE6EC] sm:mb-16"
-        />
+      {/* Divider sits at the section boundary rather than adding a second vertical gap. */}
+      <div
+        data-hello-rule
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 top-0 mx-auto h-px w-full max-w-7xl bg-white/[0.10] light:bg-[#DCE6EC]"
+      />
 
-        <div className="grid items-end gap-10 lg:grid-cols-[minmax(0,1.1fr)_minmax(300px,0.9fr)] lg:gap-20">
+      <div className="mx-auto w-full max-w-7xl px-5 sm:px-8 lg:px-10">
+        <div className="grid items-end gap-8 lg:grid-cols-[minmax(0,1.1fr)_minmax(300px,0.9fr)] lg:gap-14">
           <div>
             <p
               data-hello-eyebrow

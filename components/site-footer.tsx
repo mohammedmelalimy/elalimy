@@ -43,9 +43,6 @@ export default function SiteFooter() {
         <div className="flex flex-col gap-1.5 sm:flex-row sm:items-center sm:gap-5">
           {/* Reuse the exact same logo component as the header. */}
           <LogoMark />
-          <span className="text-[11px] text-slate-500 light:text-[#738697]">
-            © {year} Mohammed Elalimy
-          </span>
         </div>
 
         <nav aria-label="Social links" className="flex items-center gap-2">
