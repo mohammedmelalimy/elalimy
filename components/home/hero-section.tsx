@@ -1,11 +1,12 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, type MouseEvent } from 'react';
 import Link from 'next/link';
-import { ArrowDown, ArrowRight, Mail } from 'lucide-react';
+import { ArrowRight, Mail } from 'lucide-react';
 import { FaGithub, FaLinkedinIn } from 'react-icons/fa';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
 
 import TypingText from '../typing-text';
 import LiveCodeEditor from './live-code-editor';
@@ -39,7 +40,7 @@ export default function HeroSection() {
     // No entrance/scroll effects if the visitor prefers reduced motion.
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-    gsap.registerPlugin(ScrollTrigger);
+    gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
     const ctx = gsap.context(() => {
       const entrance = gsap.timeline({
@@ -96,6 +97,20 @@ export default function HeroSection() {
           '-=0.22'
         );
 
+      // The wheel travels down inside the mouse, then gently loops.
+      gsap.fromTo(
+        '[data-hero-mouse-wheel]',
+        { y: 0, opacity: 1 },
+        {
+          y: 12,
+          opacity: 0,
+          duration: 1.05,
+          ease: 'power2.inOut',
+          repeat: -1,
+          repeatDelay: 0.45
+        }
+      );
+
       // Very subtle float. This is applied to a nested element so it does
       // not conflict with the entrance and scroll transforms above.
       gsap.to('[data-hero-editor-float]', {
@@ -142,10 +157,37 @@ export default function HeroSection() {
     return () => ctx.revert();
   }, []);
 
+  // Smooth GSAP scroll to the real first section, including fixed-header offset.
+  // Unlike a native #hash link, the browser doesn't jump before the animation.
+  function scrollToProjects(event: MouseEvent<HTMLAnchorElement>) {
+    const target = document.getElementById('selected-work');
+    if (!target) return;
+    event.preventDefault();
+
+    const header = document.querySelector('header');
+    const offset = Math.max(0, header?.getBoundingClientRect().bottom ?? 96) + 16;
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (reduceMotion) {
+      window.scrollTo({ top: Math.max(0, window.scrollY + target.getBoundingClientRect().top - offset), behavior: 'instant' });
+      window.history.replaceState(null, '', '#selected-work');
+      return;
+    }
+
+    gsap.registerPlugin(ScrollToPlugin);
+    gsap.killTweensOf(window);
+    gsap.to(window, {
+      scrollTo: { y: target, offsetY: offset, autoKill: true },
+      duration: 1.25,
+      ease: 'power2.inOut',
+      onComplete: () => window.history.replaceState(null, '', '#selected-work')
+    });
+  }
+
   return (
     <section
       ref={sectionRef}
-      className="relative isolate flex min-h-[calc(100svh-7rem)] items-center overflow-hidden bg-[#050B12] text-white"
+      className="relative isolate flex min-h-[calc(100svh-7rem)] items-center overflow-hidden bg-[#050B12] text-white light:bg-[#F7FAFC] light:text-[#122638]"
     >
       {/* Grid background */}
       <div
@@ -175,14 +217,14 @@ export default function HeroSection() {
       />
 
       {/* Main container */}
-      <div className="mx-auto flex w-full max-w-7xl flex-col px-5 py-8 sm:px-8 lg:px-10 lg:py-10">
+      <div className="mx-auto flex w-full max-w-7xl flex-col px-5 pb-6 pt-8 sm:px-8 sm:pb-8 lg:px-10 lg:py-10">
         <div className="grid items-center gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:gap-14">
           {/* Left: Introduction */}
           <div data-hero-intro className="order-1 max-w-[650px]">
             {/* Developer badge */}
             <div
               data-hero-badge
-              className="mb-5 inline-flex items-center gap-2.5 rounded-full border border-white/10 bg-white/[0.025] px-4 py-2 font-mono text-xs text-slate-300"
+              className="mb-5 inline-flex items-center gap-2.5 rounded-full border border-white/10 bg-white/[0.025] px-4 py-2 font-mono text-xs text-slate-300 light:border-[#CEDBE6] light:bg-[#EDF4F8] light:text-[#385268]"
             >
               <span className="h-2 w-2 rounded-full bg-[#06B6D4] shadow-[0_0_10px_rgba(6,182,212,0.5)]" />
               Full-Stack &amp; Shopify Developer
@@ -200,7 +242,7 @@ export default function HeroSection() {
                   into real
                 </span>
               </span>
-              <span className="relative block overflow-hidden text-[#06B6D4]">
+              <span className="relative block overflow-hidden text-[#06B6D4] light:text-[#087F99]">
                 <span data-hero-line className="relative block min-h-[1.13em]">
                   {/* Reserve space for the longest typing phrase. */}
                   <span aria-hidden="true" className="invisible block">
@@ -214,7 +256,7 @@ export default function HeroSection() {
             </h1>
 
             {/* Technology stack */}
-            <p data-hero-stack className="mt-5 font-mono text-sm text-slate-400 md:text-base">
+            <p data-hero-stack className="mt-5 font-mono text-sm text-slate-400 md:text-base light:text-[#526679]">
               MERN Stack
               <span className="mx-2 text-[#06B6D4]">{'//'}</span>
               Next.js
@@ -225,7 +267,7 @@ export default function HeroSection() {
             {/* Description */}
             <p
               data-hero-description
-              className="mt-5 max-w-[540px] text-base leading-7 text-slate-400"
+              className="mt-5 max-w-[540px] text-base leading-7 text-slate-400 light:text-[#526679]"
             >
               I build modern web applications and e-commerce experiences with clean code, thoughtful
               design, and a focus on performance.
@@ -244,7 +286,7 @@ export default function HeroSection() {
               <Link
                 data-hero-action
                 href="/contact"
-                className="inline-flex min-h-12 items-center justify-center rounded-lg border border-[#06B6D4]/70 px-6 font-medium text-[#06B6D4] transition-colors duration-300 hover:bg-[#06B6D4]/10"
+                className="inline-flex min-h-12 items-center justify-center rounded-lg border border-[#06B6D4]/70 px-6 font-medium text-[#06B6D4] transition-colors duration-300 hover:bg-[#06B6D4]/10 light:text-[#087F99]"
               >
                 Get In Touch
               </Link>
@@ -263,7 +305,7 @@ export default function HeroSection() {
                     rel={isExternal ? 'noopener noreferrer' : undefined}
                     aria-label={label}
                     title={label}
-                    className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/[0.03] text-slate-400 transition-colors duration-300 hover:border-[#06B6D4]/60 hover:bg-[#06B6D4]/10 hover:text-[#06B6D4]"
+                    className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/[0.03] text-slate-400 transition-colors duration-300 hover:border-[#06B6D4]/60 hover:bg-[#06B6D4]/10 hover:text-[#06B6D4] light:border-[#CEDBE6] light:bg-white light:text-[#526679] light:hover:text-[#087F99]"
                   >
                     <Icon size={18} />
                   </a>
@@ -282,30 +324,7 @@ export default function HeroSection() {
           </div>
         </div>
 
-        {/* Scroll indicator */}
-        <a
-          href="#about"
-          data-hero-scroll-cue
-          aria-label="Scroll to explore"
-          className="group absolute bottom-6 left-1/2 z-20
-    -translate-x-1/2 cursor-pointer"
-        >
-          <div
-            className="flex h-11 w-7 items-start justify-center
-      rounded-full border border-[#06B6D4]/50
-      bg-[#06B6D4]/[0.03] pt-2.5
-      transition-all duration-300
-      group-hover:border-[#06B6D4]
-      group-hover:bg-[#06B6D4]/10"
-          >
-            <span
-              data-hero-mouse-wheel
-              className="h-2 w-[3px] rounded-full
-        bg-[#06B6D4]
-        shadow-[0_0_8px_rgba(6,182,212,0.5)]"
-            />
-          </div>
-        </a>
+
       </div>
     </section>
   );

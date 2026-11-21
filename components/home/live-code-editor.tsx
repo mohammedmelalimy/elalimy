@@ -25,16 +25,16 @@ function highlightCode(line: string) {
   const parts = line.split(/("(?:[^"\\]|\\.)*"|\b(?:const|console|log)\b)/g);
 
   return parts.map((part, index) => {
-    let className = 'text-slate-200';
+    let className = 'text-slate-200 light:text-[#25394A]';
 
     if (part.startsWith('"')) {
-      className = 'text-[#06B6D4]';
+      className = 'text-[#06B6D4] light:text-[#087F99]';
     } else if (part === 'const') {
-      className = 'text-purple-400';
+      className = 'text-purple-400 light:text-[#7C3AED]';
     } else if (part === 'console') {
-      className = 'text-yellow-300';
+      className = 'text-yellow-300 light:text-[#A16207]';
     } else if (part === 'log') {
-      className = 'text-blue-400';
+      className = 'text-blue-400 light:text-[#2563EB]';
     }
 
     return (
@@ -78,18 +78,18 @@ export default function LiveCodeEditor() {
   const currentLineIndex = displayedLines.length - 1;
 
   return (
-    <div className="w-full max-w-[480px] overflow-hidden rounded-2xl border border-cyan-500/25 bg-[#0B1119]/95 shadow-[0_20px_70px_rgba(0,0,0,0.3)]">
+    <div className="w-full max-w-[480px] overflow-hidden rounded-2xl border border-cyan-500/25 bg-[#0B1119]/95 shadow-[0_20px_70px_rgba(0,0,0,0.3)] light:border-[#C0D8E4] light:bg-white light:shadow-[0_16px_50px_rgba(15,37,55,0.08)]">
       {/* Window header */}
-      <div className="flex h-11 items-center gap-3 border-b border-white/[0.07] bg-white/[0.02] px-4">
+      <div className="flex h-11 items-center gap-3 border-b border-white/[0.07] bg-white/[0.02] px-4 light:border-[#E4ECF2] light:bg-[#F4F8FB]">
         <div className="flex gap-1.5">
           <span className="h-2.5 w-2.5 rounded-full bg-[#FF5F57]" />
           <span className="h-2.5 w-2.5 rounded-full bg-[#FEBC2E]" />
           <span className="h-2.5 w-2.5 rounded-full bg-[#28C840]" />
         </div>
 
-        <div className="ml-2 flex items-center gap-2 border-l border-white/10 pl-3">
+        <div className="ml-2 flex items-center gap-2 border-l border-white/10 pl-3 light:border-[#D5E1E9]">
           <Terminal size={14} className="text-[#06B6D4]" />
-          <span className="font-mono text-xs text-slate-400">developer.ts</span>
+          <span className="font-mono text-xs text-slate-400 light:text-[#526679]">developer.ts</span>
         </div>
       </div>
 
@@ -102,11 +102,11 @@ export default function LiveCodeEditor() {
 
             return (
               <div key={index} className="flex min-h-[1.6rem]">
-                <span className="mr-5 w-5 shrink-0 select-none text-right text-slate-600">
+                <span className="mr-5 w-5 shrink-0 select-none text-right text-slate-600 light:text-[#8393A1]">
                   {index + 1}
                 </span>
 
-                <code className="whitespace-pre text-slate-200">
+                <code className="whitespace-pre text-slate-200 light:text-[#25394A]">
                   {highlightCode(line)}
 
                   {isCurrentLine && (
@@ -123,7 +123,7 @@ export default function LiveCodeEditor() {
       </div>
 
       {/* Status bar */}
-      <div className="flex items-center justify-between border-t border-white/[0.07] px-4 py-2 font-mono text-[10px] text-slate-500">
+      <div className="flex items-center justify-between border-t border-white/[0.07] px-4 py-2 font-mono text-[10px] text-slate-500 light:border-[#E4ECF2] light:text-[#6E7F8C]">
         <span>TypeScript</span>
 
         <span className="flex items-center gap-2">

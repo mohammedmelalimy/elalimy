@@ -39,12 +39,12 @@ export default function TypingText() {
   }, [charIndex, deleting, phrase, phraseIndex]);
 
   return (
-    <span className="text-[#06B6D4]" aria-label={phrase}>
+    <span className="text-[#06B6D4] light:text-[#087F99]" aria-label={phrase}>
       <span aria-hidden="true">{phrase.slice(0, charIndex)}</span>
 
       <span
         aria-hidden="true"
-        className="ml-1 inline-block animate-pulse text-[#06B6D4] motion-reduce:animate-none"
+        className="ml-1 inline-block animate-pulse text-[#06B6D4] motion-reduce:animate-none light:text-[#087F99]"
       >
         |
       </span>

@@ -18,7 +18,7 @@ export default function LogoMark() {
       <span className="inline-flex items-center gap-1 font-mono text-lg tracking-tight">
         <span className="font-bold text-[#06B6D4]">{'>'}</span>
 
-        <span className="font-semibold text-white">elalimy</span>
+        <span className="font-semibold text-white light:text-[#122638]">elalimy</span>
 
         <span className="cursor-blink font-bold text-[#06B6D4]">_</span>
       </span>

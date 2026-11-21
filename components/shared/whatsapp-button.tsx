@@ -21,7 +21,7 @@ export default function WhatsAppButton() {
       <FaWhatsapp size={28} />
 
       {/* Tooltip */}
-      <span className="pointer-events-none absolute right-[calc(100%+12px)] whitespace-nowrap rounded-lg border border-[#155E75] bg-[#0B1722] px-3 py-2 text-xs font-medium text-white opacity-0 shadow-lg transition-opacity duration-200 group-hover:opacity-100 group-focus-visible:opacity-100">
+      <span className="pointer-events-none absolute right-[calc(100%+12px)] whitespace-nowrap rounded-lg border border-[#155E75] bg-[#0B1722] px-3 py-2 text-xs font-medium text-white light:bg-white light:text-[#122638] opacity-0 shadow-lg transition-opacity duration-200 group-hover:opacity-100 group-focus-visible:opacity-100">
         Chat on WhatsApp
       </span>
     </a>
